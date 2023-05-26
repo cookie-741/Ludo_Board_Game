@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Choose Menu</title>
+  <link href="../dist/output.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="m-3 container">
+    <div class="grid grid-cols-1 md:grid-cols-2 items-center">
+      <div class="flex justify-center md:justify-start">
+        <img src="../img/logo.png" class="md:w-40 sm:w-20 m-3 odd:drop-shadow-lg" id="logo" alt="Logo" />
+      </div>
+      <div class="flex justify-center md:justify-end space-x-5">
+        <div class="relative w-40">
+          <div class="rounded-lg bg-transparent border-2 border-black h-6 m-6 shadow-md"></div>
+          <img src="../img/star.jpg" class="w-12 absolute bottom-5 " alt="Star Image" />
+        </div>
+        <div class="relative w-40">
+          <div class="rounded-lg bg-transparent border-2 border-black h-6 m-6 shadow-md"></div>
+          <img src="../img/money1remove.png" class="w-16 absolute bottom-4" alt="Money Image" />
+        </div>
+      </div>
+    </div>
+  </nav>
+  <!--Game Mood-->
+  <div class="flex md:flex-row md:space-x-4 md:justify-center items-center">
+    <div class="w-96 h-3/4 mt-10">
+      <div class="relative">
+      <div class="circle md:h-80  h-56 md:w-80 w-56 bg-black shadow-lg transform md:skew-y-12 skew-y-12 rounded-full"></div>
+        <div class="md:h-60  h-44 md:w-60 w-44 bg-gray-400 shadow-lg  transform md:skew-y-12 skew-y-12 rounded-full absolute md:bottom-10 bottom-7  left-6 md:left-10"></div>
+        <div class="img-container"><img src="../img/local.png" class="absolute md:bottom-20 bottom-11 md:w-96 w-56 scale-150" alt="Bot Image"></div>
+      </div>
+      <div class="relative  h-16 w-56 mx-auto">
+        <div class="md:m-3 m-0 w-20 h-1 rounded drop-shadow-sm border border-solid border-black bg-black transform robuttontate-45 absolute md:right-4 right-2 rotate-45 -z-10"></div>
+        <div class="border-2 border-solid border-black w-32 rounded h-10 absolute md:top-5 top-5 right-2 button">
+         <a href="../z/index.html">
+           <button class="text-white translate-x-8 font-semibold text-2xl">Local</button>
+         </a>
+        </div>
+      </div>
+    </div>
+    <div class="w-96 h-3/4 mt-10 m-4">
+      <div class="relative">
+      <div class="circle md:h-80  h-56 md:w-80 w-56 bg-black shadow-lg transform md:-skew-x-12 -skew-x-12 rounded-full"></div>
+        <div class="md:h-60  h-44 md:w-60 w-44 bg-gray-400 shadow-lg  transform md:-skew-x-12 -skew-x-12 rounded-full absolute md:bottom-10 bottom-7  left-6 md:left-10 "></div>
+        <div class="img-container"><img src="../img/bot-removebg-preview.png"  class="absolute md:bottom-16 bottom-11 md:w-80 w-56" alt="Bot Image"></div>
+      </div>
+      <div class="relative h-16 w-56 mx-auto">
+        <div class="md:m-3 m-0 w-20 h-1 rounded drop-shadow-sm border border-solid border-black bg-black transform -rotate-45 absolute -z-10"></div>
+        <div class="rounded w-32 h-10 absolute md:top-7 top-5 left-0 button border-black border-solid border-2">
+         <a href="../z/index.html">
+           <button class="text-white translate-x-8 font-semibold text-2xl">Bot</button>
+         </a>
+        </div>
+      </div>
+    </div>
+   </div>
+  <script src="./script.js"></script>
+ </body>
+</html>

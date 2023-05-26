@@ -1,0 +1,22 @@
+body{
+    background-image: linear-gradient(to right top, #8f9091, #93999b, #96a2a1, #9faba3, #adb2a3);
+    background-repeat: no-repeat;
+    background-size: 100% 100vh;
+    overflow: hidden;
+}
+.box1 {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px inset,
+        rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+        rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+#boxCover{
+    box-shadow: rgba(0, 0, 0, 0.6) 0px 4px 6px,
+            rgba(0, 0, 0, 0.4) 0px 7px 14px -3px,
+            rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+            visibility: hidden;
+}
+.button{
+    background-image: linear-gradient(to right top, #27246f, #822166, #b33c4d, #c36f37, #b6a43e); 
+}
+
+
