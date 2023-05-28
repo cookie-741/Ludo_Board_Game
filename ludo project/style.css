@@ -384,4 +384,26 @@ repeating-conic-gradient(hsla(0,0%,100%,.2) 0 15deg, hsla(0,0%,100%,0) 0 30deg);
   animation: moveToken 0.5s ease-in-out;
 }
 
+.mainbg{
+  display: none;
+  position: absolute;
+ width: 500px;
+ height: 300px;
+ background-color: rgba(255, 0, 255, 0.811);
+ margin: auto;
+filter: blur(40px);
+margin-top: 100px;
+border-radius: 50%;
+}
+.status{
+  display: none;
+  position: absolute;
+    text-shadow: -4px 3px 6px rgba(0,0,0,0.51);
+    font-size: 56pt;
+    color: rgb(255, 234, 0);
+    transform: translateX(5%);
+}
 
+.lose{
+  color: red;
+}

@@ -1,3 +1,6 @@
+var winstatus = document.getElementById("winstatus");
+var losestatus = document.getElementById("losestatus");
+let winBg = document.getElementById("mainbg");
 let dice = document.querySelector('.dice');
 let rollMax = 8
 let angleX = 0,
@@ -317,6 +320,10 @@ function botMove(event) {
   let step;
   let nextStep;
 
+  clickedToken.classList.add('token-animation');
+  clickedToken.style.transform = "translateX(-6px)";
+  setTimeout(function () {
+    clickedToken.classList.remove('token-animation');
   if (result == 6) {
     clickedToken.remove();
     if (containerOFClickedToken.id.includes("Home")) {
@@ -364,7 +371,8 @@ function botMove(event) {
     addEventListenersToDice();
     return;
   }
-  transitionToNextPlayer()
+    transitionToNextPlayer();
+  }, 500);
 
 
   function shouldChangeDirection() {
@@ -585,26 +593,35 @@ function checkWin() {
     let playerIndex = players.indexOf("red");
     players.splice(playerIndex, 1);
     whoHasWon.red = true;
+    winBg.style.display = "block";
+    losestatus.style.display = "block";
     return true;
   } else if (turn == "green" && document.querySelectorAll(".tokenGreen").length == 0) {
     checkRank();
     let playerIndex = players.indexOf("green");
     players.splice(playerIndex, 1);
     whoHasWon.green = true;
+    winBg.style.display = "block";
+    losestatus.style.display = "block";
     return true;
   } else if (turn == "yellow" && document.querySelectorAll(".tokenYellow").length == 0) {
     checkRank();
     let playerIndex = players.indexOf("yellow");
     players.splice(playerIndex, 1);
     whoHasWon.yellow = true;
+    winBg.style.display = "block";
+    losestatus.style.display = "block";
     return true;
   } else if (turn == "blue" && document.querySelectorAll(".tokenBlue").length == 0) {
     checkRank();
     let playerIndex = players.indexOf("blue");
     players.splice(playerIndex, 1);
     whoHasWon.blue = true;
+    winBg.style.display = "block";
+    winstatus.style.display = "block";
     return true;
   }
+  
 }
 function checkRank() {
   let wonPlayercount = 0;

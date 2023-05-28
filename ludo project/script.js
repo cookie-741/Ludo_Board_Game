@@ -1,61 +1,64 @@
-let dice = document.querySelector('.dice');      
+var winstatus = document.getElementById("winstatus");
+let winBg = document.getElementById("mainbg");
+let dice = document.querySelector('.dice');
 let rollMax = 8
 let angleX = 0,
-    angleY = 0,
-    result = 1,
-    delay = 1000,
-    canRoll = true
+  angleY = 0,
+  result = 1,
+  delay = 1000,
+  canRoll = true
 
 const getRandomInt = (max) => {
   return Math.floor(Math.random() * max);
 }
 
 
-const roll = () =>{
-  
-  canRoll = false   
+const roll = () => {
+
+  canRoll = false
   const xTurn = 4 + getRandomInt(rollMax),
-      yTurn = 4 + getRandomInt(rollMax)
-  
+    yTurn = 4 + getRandomInt(rollMax)
+
   //delay = Math.max(xTurn, yTurn)*250
-  
+
   angleX += 90 * xTurn
   angleY += 90 * yTurn
   // balancing the results
-    if(angleX%180){
-    getRandomInt(3) > 1 && (angleX += 90)}
-    
+  if (angleX % 180) {
+    getRandomInt(3) > 1 && (angleX += 90)
+  }
+
   dice.style.transform = "rotateX(" + angleX + "deg) rotateY(" + angleY + "deg)"
   dice.style.transitionDuration = delay + 'ms'
-    
-  let x = angleX%360,
-      y = angleY%360
-    
-  if(x === 0 || x === 180){
-    switch ((x+y)%360) {
-  case 0: result = 1
+
+  let x = angleX % 360,
+    y = angleY % 360
+
+  if (x === 0 || x === 180) {
+    switch ((x + y) % 360) {
+      case 0: result = 1
         break
-  case 90: result = 5
+      case 90: result = 5
         break
-  case 180: result = 6
+      case 180: result = 6
         break
-  case 270: result = 2
+      case 270: result = 2
         break
-  default:
-    console.error(123456);
+      default:
+        console.error(123456);
     }
   }
-  else if( x === 90){
+  else if (x === 90) {
     result = 4
   }
-  else if( x === 270){
+  else if (x === 270) {
     result = 3
   }
-  
+
   setTimeout(() => canRoll = true, delay)
-  
+
   console.log('result:', result)
-  return(result)
+  return (result)
 }
 let turn = "red";//first player က red မို့လို့။
 let redStartPoint = 1;
@@ -64,45 +67,45 @@ let yellowStartPoint = 27;
 let blueStartPoint = 40;
 
 let redMovedSteps = { // step 50 ပြည့်ရင် finish line ကိုသွားမှာဖြစ်တဲ့အတွက် step တွေကို count လုပ်ထားတာ။
-  redToken1 : 0,
-  redToken2 : 0,
-  redToken3 : 0,
-  redToken4 : 0
+  redToken1: 0,
+  redToken2: 0,
+  redToken3: 0,
+  redToken4: 0
 };
 let greenMovedSteps = {
-  greenToken1 : 0,
-  greenToken2 : 0,
-  greenToken3 : 0,
-  greenToken4 : 0
+  greenToken1: 0,
+  greenToken2: 0,
+  greenToken3: 0,
+  greenToken4: 0
 };
 let yellowMovedSteps = {
-  yellowToken1 : 0,
-  yellowToken2 : 0,
-  yellowToken3 : 0,
-  yellowToken4 : 0
+  yellowToken1: 0,
+  yellowToken2: 0,
+  yellowToken3: 0,
+  yellowToken4: 0
 };
 let blueMovedSteps = {
-  blueToken1 : 0,
-  blueToken2 : 0,
-  blueToken3 : 0,
-  blueToken4 : 0
+  blueToken1: 0,
+  blueToken2: 0,
+  blueToken3: 0,
+  blueToken4: 0
 };
 let whoHasWon = {
-  red : false,
-  green : false,
-  yellow : false,
-  blue : false
+  red: false,
+  green: false,
+  yellow: false,
+  blue: false
 }
 
-let players = ["red","green","yellow","blue"]
+let players = ["red", "green", "yellow", "blue"]
 addEventListenersToDice();
 function preparePlayerTurn() {
   removeEventListenersFromDice();
   addEventListenersToTokens();
 }
-function addDiceElement(color){
-  document.getElementById(`${color}DiceContainer`).innerHTML = 
-  `<div class="dice">
+function addDiceElement(color) {
+  document.getElementById(`${color}DiceContainer`).innerHTML =
+    `<div class="dice">
   <div class="face" data-id="1">
     <div class="point point-middle point-center"></div>
   </div>
@@ -138,23 +141,23 @@ function addDiceElement(color){
   </div>
 </div>`
 }
-function addEventListenersToDice(){
-  dice.addEventListener('click',roll);
+function addEventListenersToDice() {
+  dice.addEventListener('click', roll);
   //dice.addEventListener('click', areAllTokensStillInsideHome);
   dice.addEventListener('click', preparePlayerTurn);
 }
-function removeEventListenersFromDice(){
-  dice.removeEventListener('click',roll);
+function removeEventListenersFromDice() {
+  dice.removeEventListener('click', roll);
   dice.removeEventListener('click', preparePlayerTurn);
 }
-function transitionToNextPlayer(){
+function transitionToNextPlayer() {
   let previousTurn;
   previousTurn = turn;
   let nextPlayerIndex;
-  if (players[players.indexOf(previousTurn)+1] == undefined){
+  if (players[players.indexOf(previousTurn) + 1] == undefined) {
     nextPlayerIndex = 0;
   } else {
-    nextPlayerIndex = players.indexOf(previousTurn)+1
+    nextPlayerIndex = players.indexOf(previousTurn) + 1
   }
   turn = players[nextPlayerIndex]
   document.querySelector(`.${previousTurn}Player`).classList.remove(`${previousTurn}Ready`);//ဘယ် player အလှည့်ဖြစ်ကြောင်းပြတဲ့ effect ကိုဖြုတ်တာ။
@@ -166,85 +169,208 @@ function transitionToNextPlayer(){
   document.querySelector(`.${turn}Player`).classList.add(`${turn}Ready`);//ဘယ် player အလှည့်ဖြစ်ကြောင်းပြတဲ့ effect ကိုတပ်တာ။
 }
 function addEventListenersToTokens() {
-  let moveableTokenNum = [];
-  let count = 0;
-  let tokens;
-
   if (turn == "red") {
-    tokens = document.querySelectorAll(".tokenRed");
-  } else if (turn == "green") {
-    tokens = document.querySelectorAll(".tokenGreen");
-  } else if (turn == "yellow") {
-    tokens = document.querySelectorAll(".tokenYellow");
-  } else if (turn == "blue") {
-    tokens = document.querySelectorAll(".tokenBlue");
-  }
-
-  for (let index = 0; index < tokens.length; index++) {
-    let containerOFClickedToken = tokens[index].parentNode;
-
-    if (containerOFClickedToken.id.includes("Home") == false) {
-      console.log("You are outside of home");
-
-      if (isInFinishLine(containerOFClickedToken) == true) {
-        if (turnMovedSteps[turn][tokens[index].id] + result < 7) {
+    let moveableTokenNum = [];
+    let count = 0;
+    let redTokens = document.querySelectorAll(".tokenRed");
+    for (let index = 0; index < redTokens.length; index++) {
+      let containerOFClickedToken = redTokens[index].parentNode;
+      if (containerOFClickedToken.id.includes("Home") == false) {
+        console.log("You are outside of home");
+        if (isInFinishLine(containerOFClickedToken) == true) {
+          if (redMovedSteps[redTokens[index].id] + result < 7) {
+            redTokens[index].addEventListener("click", tokenMove);
+            moveableTokenNum.push(redTokens[index].id.slice(-1));
+            count++;
+            console.log("You are outside of home, at the finish line, and within six units.");
+          } else {
+            console.log("You are outside of home, at the finish line, and outside six units.");
+          }
+        } else if (isInFinishLine(containerOFClickedToken) == false) {
           count++;
-          tokens[index].addEventListener("click", tokenMove);
-          
-          moveableTokenNum.push(tokens[index].id.slice(-1));
-          console.log("You are outside of home, at the finish line, and within six units.");
-        } else {
-          console.log("You are outside of home, at the finish line, and outside six units.");
+          redTokens[index].addEventListener("click", tokenMove);
+          moveableTokenNum.push(redTokens[index].id.slice(-1));
+          console.log("You are outside of home, and not at the finish line.");
         }
-      } else if (isInFinishLine(containerOFClickedToken) == false) {
+      } else if (containerOFClickedToken.id.includes("Home") && result == 6) {
+        redTokens[index].addEventListener("click", tokenMove)
+        moveableTokenNum.push(redTokens[index].id.slice(-1));
         count++;
-        tokens[index].addEventListener("click", tokenMove);
-        moveableTokenNum.push(tokens[index].id.slice(-1));
-        console.log("You are outside of home, and not at the finish line.");
+      } else if (containerOFClickedToken.id.includes("Home")) {
+        console.log("You're inside of home");
       }
-    } else if (containerOFClickedToken.id.includes("Home") && result == 6) {
-      count++;
-      tokens[index].addEventListener("click", tokenMove);
-      moveableTokenNum.push(tokens[index].id.slice(-1));
-    } else if (containerOFClickedToken.id.includes("Home")) {
-      console.log("You're inside of home");
-    } else {
-      console.log("Are you useful?");
-      count++;
+      else {
+        console.log("Are you useful?");
+        count++;
+      }
+      redTokens[index].style.zIndex = "10";
+    } console.log(count);
+    console.log(moveableTokenNum);
+    if (count == 0) {
+      
+      setTimeout(() => {
+        transitionToNextPlayer()
+      }, 1500);
     }
+  } else if (turn == "green") {
+    let moveableTokenNum = [];
+    let count = 0;
+    let greenTokens = document.querySelectorAll(".tokenGreen");
+    for (let index = 0; index < greenTokens.length; index++) {
+      let containerOFClickedToken = greenTokens[index].parentNode;
+      if (containerOFClickedToken.id.includes("Home") == false) {
+        console.log("You are outside of home");
+        if (isInFinishLine(containerOFClickedToken) == true) {
+          if (greenMovedSteps[greenTokens[index].id] + result < 7) {
+            count++;
+            greenTokens[index].addEventListener("click", tokenMove);
 
-    tokens[index].style.zIndex = "10";
-  }
+            moveableTokenNum.push(greenTokens[index].id.slice(-1));
+            console.log("You are outside of home, at the finish line, and within six units.");
+          } else {
+            console.log("You are outside of home, at the finish line, and outside six units.");
+          }
+        } else if (isInFinishLine(containerOFClickedToken) == false) {
+          count++;
+          greenTokens[index].addEventListener("click", tokenMove);
 
-  console.log(count);
-  console.log(moveableTokenNum);
+          moveableTokenNum.push(greenTokens[index].id.slice(-1));
+          console.log("You are outside of home, and not at the finish line.");
+        }
+      } else if (containerOFClickedToken.id.includes("Home") && result == 6) {
+        count++;
+        greenTokens[index].addEventListener("click", tokenMove);
 
-  if (count == 0) {
-    setTimeout(() => {
-      transitionToNextPlayer();
-    }, 1500);
+        moveableTokenNum.push(greenTokens[index].id.slice(-1));
+      } else if (containerOFClickedToken.id.includes("Home")) {
+        console.log("You're inside of home");
+      }
+      else {
+        console.log("Are you useful?");
+        count++;
+      }
+      greenTokens[index].style.zIndex = "10";
+    }
+    console.log(count);
+    console.log(moveableTokenNum);
+    if (count == 0) {
+      setTimeout(() => {
+        transitionToNextPlayer()
+      }, 1500);
+    }
+  } else if (turn == "yellow") {
+    let moveableTokenNum = [];
+    let count = 0;
+    let yellowTokens = document.querySelectorAll(".tokenYellow");
+    for (let index = 0; index < yellowTokens.length; index++) {
+      let containerOFClickedToken = yellowTokens[index].parentNode;
+      if (containerOFClickedToken.id.includes("Home") == false) {
+        console.log("You are outside of home");
+        if (isInFinishLine(containerOFClickedToken) == true) {
+          if (yellowMovedSteps[yellowTokens[index].id] + result < 7) {
+            count++;
+            yellowTokens[index].addEventListener("click", tokenMove);
+
+            moveableTokenNum.push(yellowTokens[index].id.slice(-1));
+            console.log("You are outside of home, at the finish line, and within six units.");
+          } else {
+            console.log("You are outside of home, at the finish line, and outside six units.");
+          }
+        } else if (isInFinishLine(containerOFClickedToken) == false) {
+          count++;
+          yellowTokens[index].addEventListener("click", tokenMove);
+
+          moveableTokenNum.push(yellowTokens[index].id.slice(-1));
+          console.log("You are outside of home, and not at the finish line.");
+        }
+      } else if (containerOFClickedToken.id.includes("Home") && result == 6) {
+        count++;
+        yellowTokens[index].addEventListener("click", tokenMove);
+
+        moveableTokenNum.push(yellowTokens[index].id.slice(-1));
+      } else if (containerOFClickedToken.id.includes("Home")) {
+        console.log("You're inside of home");
+      }
+      else {
+        console.log("Are you useful?");
+        count++;
+      }
+      yellowTokens[index].style.zIndex = "10";
+    } console.log(count);
+    console.log(moveableTokenNum);
+    if (count == 0) {
+      setTimeout(() => {
+        transitionToNextPlayer()
+      }, 1500);
+    }
+  } else if (turn == "blue") {
+    let moveableTokenNum = [];
+    let count = 0;
+    let blueTokens = document.querySelectorAll(".tokenBlue");
+    for (let index = 0; index < blueTokens.length; index++) {
+      let containerOFClickedToken = blueTokens[index].parentNode;
+      if (containerOFClickedToken.id.includes("Home") == false) {
+        console.log("You are outside of home");
+        if (isInFinishLine(containerOFClickedToken) == true) {
+          if (blueMovedSteps[blueTokens[index].id] + result < 7) {
+            count++;
+            blueTokens[index].addEventListener("click", tokenMove);
+
+            moveableTokenNum.push(blueTokens[index].id.slice(-1));
+            console.log("You are outside of home, at the finish line, and within six units.");
+          } else {
+            console.log("You are outside of home, at the finish line, and outside six units.");
+          }
+        } else if (isInFinishLine(containerOFClickedToken) == false) {
+          count++;
+          blueTokens[index].addEventListener("click", tokenMove);
+
+          moveableTokenNum.push(blueTokens[index].id.slice(-1));
+          console.log("You are outside of home, and not at the finish line.");
+        }
+      } else if (containerOFClickedToken.id.includes("Home") && result == 6) {
+        count++;
+        blueTokens[index].addEventListener("click", tokenMove);
+
+        moveableTokenNum.push(blueTokens[index].id.slice(-1));
+      } else if (containerOFClickedToken.id.includes("Home")) {
+        console.log("You're inside of home");
+      }
+      else {
+        console.log("Are you useful?");
+        count++;
+      }
+      blueTokens[index].style.zIndex = "10";
+    }
+    console.log(count);
+    console.log(moveableTokenNum);
+    if (count == 0) {
+      setTimeout(() => {
+        transitionToNextPlayer()
+      }, 1500);
+    }
   }
 }
-function removeEventListenersFromPreviousTokens(){
-  if (turn == "red"){
+function removeEventListenersFromPreviousTokens() {
+  if (turn == "red") {
     let blueTokens = document.querySelectorAll(".tokenBlue");
     for (let index = 0; index < blueTokens.length; index++) {
       blueTokens[index].removeEventListener("click", tokenMove)
       blueTokens[index].style.zIndex = "5";
     }
-  } else if (turn == "green"){
+  } else if (turn == "green") {
     let redTokens = document.querySelectorAll(".tokenRed");
     for (let index = 0; index < redTokens.length; index++) {
       redTokens[index].removeEventListener("click", tokenMove)
       redTokens[index].style.zIndex = "5";
     }
-  } else if(turn == "yellow"){
+  } else if (turn == "yellow") {
     let greenTokens = document.querySelectorAll(".tokenGreen");
     for (let index = 0; index < greenTokens.length; index++) {
       greenTokens[index].removeEventListener("click", tokenMove)
       greenTokens[index].style.zIndex = "5";
     }
-  } else if (turn == "blue"){
+  } else if (turn == "blue") {
     let yellowTokens = document.querySelectorAll(".tokenYellow");
     for (let index = 0; index < yellowTokens.length; index++) {
       yellowTokens[index].removeEventListener("click", tokenMove)
@@ -252,17 +378,14 @@ function removeEventListenersFromPreviousTokens(){
     }
   }
 }
-
-
-
 function tokenMove(event) {
   let clickedToken = event.target;
   let containerOFClickedToken = clickedToken.parentNode;
   let step;
   let nextStep;
-  
+
   clickedToken.classList.add('token-animation');
-  clickedToken.style.transform = "translateX(-60px)";
+  clickedToken.style.transform = "translateX(-6px)";
   setTimeout(function () {
     clickedToken.classList.remove('token-animation');
 
@@ -372,6 +495,7 @@ function tokenMove(event) {
         document.getElementById(`${turn}Step${redMovedSteps[clickedToken.id]}`).appendChild(clickedToken);
       } else if (redMovedSteps[clickedToken.id] == 6) {
         clickedToken.remove();
+        document.getElementById('disappear').play();
         console.log("Finished!!");
         return true;
       }
@@ -383,6 +507,7 @@ function tokenMove(event) {
         document.getElementById(`${turn}Step${greenMovedSteps[clickedToken.id]}`).appendChild(clickedToken);
       } else if (greenMovedSteps[clickedToken.id] == 6) {
         clickedToken.remove();
+        document.getElementById('disappear').play();
         console.log("Finished!!");
         return true;
       }
@@ -394,6 +519,7 @@ function tokenMove(event) {
         document.getElementById(`${turn}Step${yellowMovedSteps[clickedToken.id]}`).appendChild(clickedToken);
       } else if (yellowMovedSteps[clickedToken.id] == 6) {
         clickedToken.remove();
+        document.getElementById('disappear').play();
         console.log("Finished!!");
         return true;
       }
@@ -405,11 +531,13 @@ function tokenMove(event) {
         document.getElementById(`${turn}Step${blueMovedSteps[clickedToken.id]}`).appendChild(clickedToken);
       } else if (blueMovedSteps[clickedToken.id] == 6) {
         clickedToken.remove();
+        document.getElementById('disappear').play();
         console.log("Finished!!");
         return true;
       }
     }
   }
+
   function updateMovedSteps() {//အလှည့်တိုင်း ဘယ်နှစ်ကွက်ရွှေ့ပြီးပြီလဲဆိုတာကို update တင်တာ။
     if (turn == "red") {
       redMovedSteps[clickedToken.id] += result;
@@ -421,8 +549,8 @@ function tokenMove(event) {
       blueMovedSteps[clickedToken.id] += result;
     }
     clickedToken.classList.add('token-animation');
-    clickedToken.style.transform = "translateX(-60px)";
-    
+    clickedToken.style.transform = "translateX(-6px)";
+
 
   }
   function checkForOpponentTokens() {
@@ -469,43 +597,49 @@ function tokenMove(event) {
   }
 
 }
-
-
-function checkWin () {
-  if (turn == "red" && document.querySelectorAll(".tokenRed").length == 0){
+function checkWin() {
+  if (turn == "red" && document.querySelectorAll(".tokenRed").length == 0) {
     checkRank();
     let playerIndex = players.indexOf("red");
-    players.splice(playerIndex,1);
+    players.splice(playerIndex, 1);
     whoHasWon.red = true;
+    winBg.style.display = "block";
+    winstatus.style.display = "block";
     return true;
   } else if (turn == "green" && document.querySelectorAll(".tokenGreen").length == 0) {
     checkRank();
     let playerIndex = players.indexOf("green");
-    players.splice(playerIndex,1);
+    players.splice(playerIndex, 1);
     whoHasWon.green = true;
+    winBg.style.display = "block";
+    winstatus.style.display = "block";
     return true;
-  } else if (turn == "yellow" && document.querySelectorAll(".tokenYellow").length == 0){
+  } else if (turn == "yellow" && document.querySelectorAll(".tokenYellow").length == 0) {
     checkRank();
     let playerIndex = players.indexOf("yellow");
-    players.splice(playerIndex,1);
+    players.splice(playerIndex, 1);
     whoHasWon.yellow = true;
+    winBg.style.display = "block";
+    winstatus.style.display = "block";
     return true;
-  } else if (turn == "blue" && document.querySelectorAll(".tokenBlue").length == 0){
+  } else if (turn == "blue" && document.querySelectorAll(".tokenBlue").length == 0) {
     checkRank();
     let playerIndex = players.indexOf("blue");
-    players.splice(playerIndex,1);
+    players.splice(playerIndex, 1);
     whoHasWon.blue = true;
+    winBg.style.display = "block";
+    winstatus.style.display = "block";
     return true;
   }
 }
-function checkRank(){//whoHasWon ထဲက ဘယ်နှစ်ယောက်နိုင်ပြီးပြီလဲကြည့်တယ်။
+function checkRank() {//whoHasWon ထဲက ဘယ်နှစ်ယောက်နိုင်ပြီးပြီလဲကြည့်တယ်။
   let wonPlayercount = 0;
-    for (const key in whoHasWon) {
-      if (whoHasWon[key] == true){
-        wonPlayercount ++;
-      }
+  for (const key in whoHasWon) {
+    if (whoHasWon[key] == true) {
+      wonPlayercount++;
     }
-    console.log(`${turn} placed no: ${wonPlayercount + 1}`);//နိုင်တဲ့သူအရေအတွက်ကိုတစ်ပေါင်းရင် rank ရမယ်။ eg တစ်ယောက်နိုင်ထားရင် ကိုယ်ကနှစ်။
+  }
+  console.log(`${turn} placed no: ${wonPlayercount + 1}`);//နိုင်တဲ့သူအရေအတွက်ကိုတစ်ပေါင်းရင် rank ရမယ်။ eg တစ်ယောက်နိုင်ထားရင် ကိုယ်ကနှစ်။
 }
 function hasDuplicates(array) {
   for (let i = 0; i < array.length; i++) {
@@ -517,16 +651,16 @@ function hasDuplicates(array) {
   }
   return false;
 }
-function removeEventListenersFromCurrentTokens(){
+function removeEventListenersFromCurrentTokens() {
   let color = turn.charAt(0).toUpperCase() + turn.slice(1);
-    let tokens = document.querySelectorAll(`.token${color}`);
-    for (let index = 0; index < tokens.length; index++) {
-      tokens[index].removeEventListener("click", tokenMove)
-      tokens[index].style.zIndex = "5";
-    }
+  let tokens = document.querySelectorAll(`.token${color}`);
+  for (let index = 0; index < tokens.length; index++) {
+    tokens[index].removeEventListener("click", tokenMove)
+    tokens[index].style.zIndex = "5";
+  }
 }
-function isInFinishLine(container){
-  if ( container.className.includes("finishLine") ){
+function isInFinishLine(container) {
+  if (container.className.includes("finishLine")) {
     return true;
   } else {
     return false
