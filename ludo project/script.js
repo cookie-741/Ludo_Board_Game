@@ -165,189 +165,66 @@ function transitionToNextPlayer(){
   console.log(turn);
   document.querySelector(`.${turn}Player`).classList.add(`${turn}Ready`);//ဘယ် player အလှည့်ဖြစ်ကြောင်းပြတဲ့ effect ကိုတပ်တာ။
 }
-function addEventListenersToTokens(){
-  if (turn == "red"){
-    let moveableTokenNum = [];
-    let count = 0;
-    let redTokens = document.querySelectorAll(".tokenRed");
-        for (let index = 0; index < redTokens.length; index++) {
-          let containerOFClickedToken = redTokens[index].parentNode;
-          if (containerOFClickedToken.id.includes("Home") == false){
-            console.log("You are outside of home");
-            if (isInFinishLine(containerOFClickedToken) == true){
-              if (redMovedSteps[redTokens[index].id] + result < 7 ){
-                redTokens[index].addEventListener("click", tokenMove);
-                moveableTokenNum.push(redTokens[index].id.slice(-1));
-                count++;
-                console.log("You are outside of home, at the finish line, and within six units.");
-              } else {
-                console.log("You are outside of home, at the finish line, and outside six units.");
-              }
-            } else if (isInFinishLine(containerOFClickedToken) == false){
-              count++;
-              redTokens[index].addEventListener("click", tokenMove);
-              moveableTokenNum.push(redTokens[index].id.slice(-1));
-              console.log("You are outside of home, and not at the finish line.");
-            }
-          } else if (containerOFClickedToken.id.includes("Home") && result == 6){
-            redTokens[index].addEventListener("click", tokenMove)
-            moveableTokenNum.push(redTokens[index].id.slice(-1));
-            count++;
-          } else if (containerOFClickedToken.id.includes("Home")){
-            console.log("You're inside of home");
-          } 
-          else {
-            console.log("Are you useful?");
-                count++;
-          }
-          redTokens[index].style.zIndex = "10";
-        }console.log(count);
-        console.log(moveableTokenNum);
-            if (count == 0){
-              setTimeout(() => {
-                transitionToNextPlayer()
-              }, 1500);
-            }
-  } else if (turn == "green"){
-    let moveableTokenNum = [];
-    let count = 0;
-    let greenTokens = document.querySelectorAll(".tokenGreen");
-        for (let index = 0; index < greenTokens.length; index++) {
-          let containerOFClickedToken = greenTokens[index].parentNode;
-          if (containerOFClickedToken.id.includes("Home") == false){
-            console.log("You are outside of home");
-            if (isInFinishLine(containerOFClickedToken) == true){
-              if (greenMovedSteps[greenTokens[index].id]+ result < 7 ){
-                count++;
-                greenTokens[index].addEventListener("click", tokenMove);
-                
-                moveableTokenNum.push(greenTokens[index].id.slice(-1));
-                console.log("You are outside of home, at the finish line, and within six units.");
-              } else {
-                console.log("You are outside of home, at the finish line, and outside six units.");
-              }
-            } else if (isInFinishLine(containerOFClickedToken) == false){
-              count++;
-              greenTokens[index].addEventListener("click", tokenMove);
-              
-              moveableTokenNum.push(greenTokens[index].id.slice(-1));
-              console.log("You are outside of home, and not at the finish line.");
-            }
-          } else if (containerOFClickedToken.id.includes("Home") && result == 6){
-            count++;
-            greenTokens[index].addEventListener("click", tokenMove);
-            
-            moveableTokenNum.push(greenTokens[index].id.slice(-1));
-          } else if (containerOFClickedToken.id.includes("Home")){
-            console.log("You're inside of home");
-          } 
-           else {
-            console.log("Are you useful?");
-                count++;
-          }
-          greenTokens[index].style.zIndex = "10";
+function addEventListenersToTokens() {
+  let moveableTokenNum = [];
+  let count = 0;
+  let tokens;
+
+  if (turn == "red") {
+    tokens = document.querySelectorAll(".tokenRed");
+  } else if (turn == "green") {
+    tokens = document.querySelectorAll(".tokenGreen");
+  } else if (turn == "yellow") {
+    tokens = document.querySelectorAll(".tokenYellow");
+  } else if (turn == "blue") {
+    tokens = document.querySelectorAll(".tokenBlue");
+  }
+
+  for (let index = 0; index < tokens.length; index++) {
+    let containerOFClickedToken = tokens[index].parentNode;
+
+    if (containerOFClickedToken.id.includes("Home") == false) {
+      console.log("You are outside of home");
+
+      if (isInFinishLine(containerOFClickedToken) == true) {
+        if (turnMovedSteps[turn][tokens[index].id] + result < 7) {
+          count++;
+          tokens[index].addEventListener("click", tokenMove);
+          
+          moveableTokenNum.push(tokens[index].id.slice(-1));
+          console.log("You are outside of home, at the finish line, and within six units.");
+        } else {
+          console.log("You are outside of home, at the finish line, and outside six units.");
         }
-        console.log(count);
-        console.log(moveableTokenNum);
-            if (count == 0){
-              setTimeout(() => {
-                transitionToNextPlayer()
-              }, 1500);
-            }
-  } else if (turn == "yellow"){
-    let moveableTokenNum = [];
-    let count = 0;
-    let yellowTokens = document.querySelectorAll(".tokenYellow");
-        for (let index = 0; index < yellowTokens.length; index++) {
-          let containerOFClickedToken = yellowTokens[index].parentNode;
-          if (containerOFClickedToken.id.includes("Home") == false){
-            console.log("You are outside of home");
-            if (isInFinishLine(containerOFClickedToken) == true){
-              if (yellowMovedSteps[yellowTokens[index].id] + result < 7 ){
-                count++;
-                yellowTokens[index].addEventListener("click", tokenMove);
-                
-                moveableTokenNum.push(yellowTokens[index].id.slice(-1));
-                console.log("You are outside of home, at the finish line, and within six units.");
-              } else {
-                console.log("You are outside of home, at the finish line, and outside six units.");
-              }
-            } else if (isInFinishLine(containerOFClickedToken) == false){
-              count++;
-              yellowTokens[index].addEventListener("click", tokenMove);
-              
-              moveableTokenNum.push(yellowTokens[index].id.slice(-1));
-              console.log("You are outside of home, and not at the finish line.");
-            }
-          } else if (containerOFClickedToken.id.includes("Home") && result == 6){
-            count++;
-            yellowTokens[index].addEventListener("click", tokenMove);
-            
-            moveableTokenNum.push(yellowTokens[index].id.slice(-1));
-          }  else if (containerOFClickedToken.id.includes("Home")){
-            console.log("You're inside of home");
-          } 
-          else {
-            console.log("Are you useful?");
-            count++;  
-          }
-          yellowTokens[index].style.zIndex = "10";
-        }console.log(count);
-        console.log(moveableTokenNum);
-            if (count == 0){
-              setTimeout(() => {
-                transitionToNextPlayer()
-              }, 1500);
-            }
-  } else if (turn == "blue"){
-    let moveableTokenNum = [];
-    let count = 0;
-    let blueTokens = document.querySelectorAll(".tokenBlue");
-        for (let index = 0; index < blueTokens.length; index++) {
-          let containerOFClickedToken = blueTokens[index].parentNode;
-          if (containerOFClickedToken.id.includes("Home") == false){
-            console.log("You are outside of home");
-            if (isInFinishLine(containerOFClickedToken) == true){
-              if (blueMovedSteps[blueTokens[index].id] + result  < 7 ){
-                count++;
-                blueTokens[index].addEventListener("click", tokenMove);
-                
-                moveableTokenNum.push(blueTokens[index].id.slice(-1));
-                console.log("You are outside of home, at the finish line, and within six units.");
-              } else {
-                console.log("You are outside of home, at the finish line, and outside six units.");
-              }
-            } else if (isInFinishLine(containerOFClickedToken) == false){
-              count++;
-              blueTokens[index].addEventListener("click", tokenMove);
-              
-              moveableTokenNum.push(blueTokens[index].id.slice(-1));
-              console.log("You are outside of home, and not at the finish line.");
-            }
-          } else if (containerOFClickedToken.id.includes("Home") && result == 6){
-            count++;
-            blueTokens[index].addEventListener("click", tokenMove);
-            
-            moveableTokenNum.push(blueTokens[index].id.slice(-1));
-          } else if (containerOFClickedToken.id.includes("Home")){
-            console.log("You're inside of home");
-          } 
-           else {
-            console.log("Are you useful?");
-              count++;
-          }
-          blueTokens[index].style.zIndex = "10";
-        }
-        console.log(count);
-        console.log(moveableTokenNum);
-        if (count == 0){
-          setTimeout(() => {
-          transitionToNextPlayer()
-        }, 1500);
+      } else if (isInFinishLine(containerOFClickedToken) == false) {
+        count++;
+        tokens[index].addEventListener("click", tokenMove);
+        moveableTokenNum.push(tokens[index].id.slice(-1));
+        console.log("You are outside of home, and not at the finish line.");
       }
+    } else if (containerOFClickedToken.id.includes("Home") && result == 6) {
+      count++;
+      tokens[index].addEventListener("click", tokenMove);
+      moveableTokenNum.push(tokens[index].id.slice(-1));
+    } else if (containerOFClickedToken.id.includes("Home")) {
+      console.log("You're inside of home");
+    } else {
+      console.log("Are you useful?");
+      count++;
+    }
+
+    tokens[index].style.zIndex = "10";
+  }
+
+  console.log(count);
+  console.log(moveableTokenNum);
+
+  if (count == 0) {
+    setTimeout(() => {
+      transitionToNextPlayer();
+    }, 1500);
   }
 }
-
 function removeEventListenersFromPreviousTokens(){
   if (turn == "red"){
     let blueTokens = document.querySelectorAll(".tokenBlue");
@@ -376,211 +253,224 @@ function removeEventListenersFromPreviousTokens(){
   }
 }
 
-function tokenMove(event){
+
+
+function tokenMove(event) {
   let clickedToken = event.target;
   let containerOFClickedToken = clickedToken.parentNode;
   let step;
   let nextStep;
   
-  if (result == 6) {
-    clickedToken.remove();
-    if (containerOFClickedToken.id.includes("Home")){//အနှိပ်ခံလိုက်ရတဲ့ token က home မှာပဲရှိနေသေးရင်
-    if (turn == "red"){
-      document.getElementById(`step${redStartPoint}`).appendChild(clickedToken); 
-    } else if(turn == "green"){
-      document.getElementById(`step${greenStartPoint}`).appendChild(clickedToken);
-    } else if(turn == "yellow"){
-      document.getElementById(`step${yellowStartPoint}`).appendChild(clickedToken);
-    } else if (turn == "blue"){
-      document.getElementById(`step${blueStartPoint}`).appendChild(clickedToken);
-    }
-  }
-  } if (!(containerOFClickedToken.id.includes("Home"))) {
-    updateMovedSteps();
-    step = containerOFClickedToken.id.slice(4);
-    nextStep = Number(step) + result;
-    if (shouldChangeDirection()){//step ရွှေ့တာသတ်မှတ်ထားတာထက်ကျော်သွားပြီဆိုရင် finish line ထဲဝင်သွားမယ်။
-      moveToFinishLine();//ဒီနှစ်ခုအရင်လာရတာအကြောင်းရှိတယ်။ မဟုတ်ရင် အနီက finish line ကိုမဝင်ဘဲ။ >52 ထဲအရင်ရောက်သွားလိမ့်မယ်။
-    } else if (isInFinishLine(containerOFClickedToken)){
-      if (moveInFinishLine()){
-        addEventListenersToDice();
+  clickedToken.classList.add('token-animation');
+  clickedToken.style.transform = "translateX(-60px)";
+  setTimeout(function () {
+    clickedToken.classList.remove('token-animation');
+
+    if (result == 6) {
+      clickedToken.remove();
+      if (containerOFClickedToken.id.includes("Home")) {//အနှိပ်ခံလိုက်ရတဲ့ token က home မှာပဲရှိနေသေးရင်
+        if (turn == "red") {
+          document.getElementById(`step${redStartPoint}`).appendChild(clickedToken);
+        } else if (turn == "green") {
+          document.getElementById(`step${greenStartPoint}`).appendChild(clickedToken);
+        } else if (turn == "yellow") {
+          document.getElementById(`step${yellowStartPoint}`).appendChild(clickedToken);
+        } else if (turn == "blue") {
+          document.getElementById(`step${blueStartPoint}`).appendChild(clickedToken);
+        }
+      }
+    } if (!(containerOFClickedToken.id.includes("Home"))) {
+      updateMovedSteps();
+      step = containerOFClickedToken.id.slice(4);
+      nextStep = Number(step) + result;
+      if (shouldChangeDirection()) {//step ရွှေ့တာသတ်မှတ်ထားတာထက်ကျော်သွားပြီဆိုရင် finish line ထဲဝင်သွားမယ်။
+        moveToFinishLine();//ဒီနှစ်ခုအရင်လာရတာအကြောင်းရှိတယ်။ မဟုတ်ရင် အနီက finish line ကိုမဝင်ဘဲ။ >52 ထဲအရင်ရောက်သွားလိမ့်မယ်။
+      } else if (isInFinishLine(containerOFClickedToken)) {
+        if (moveInFinishLine()) {
+          addEventListenersToDice();
+          return;
+        }
+      }
+      else if (nextStep > 52) {//step စုစုပေါင်းက 52 ပဲရှိတယ်။ ကျော်သွားရင် step အစကနေပြန်သွားရမယ်။ ပုံနဲ့ကြည့်ရင် ပြောတာပိုနားလည်လိမ့်မယ်။
+        nextStep = nextStep - 52;
+        document.getElementById("step" + nextStep).appendChild(clickedToken);
+        if (checkForOpponentTokens()) {//ရွှေ့လိုက်တဲ့ နေရာမှာ opponent's token ရှိလားကြည့်မယ်။ 
+          addEventListenersToDice();
+          return;//အောက်ဆုံးမှာမှ transitionToNextPlayer ကိုထည့်ထားတာဖြစ်တဲ့အတွက် return ကို run ရင် function ရပ်သွားပြီး နောက် player ဆီ
+          //သွားမှာမဟုတ်ဘူး။ တစ်နည်းအားဖြင့် လက်ရှိ player ကိုပဲ နှစ်ခါလုပ်ခိုင်းမှာဖြစ်တယ်။
+        }
+      } else {
+        document.getElementById("step" + nextStep).appendChild(clickedToken);
+        if (checkForOpponentTokens()) {
+          addEventListenersToDice();
+          return;//အောက်ဆုံးမှာမှ transitionToNextPlayer ကိုထည့်ထားတာဖြစ်တဲ့အတွက် return ကို run ရင် function ရပ်သွားပြီး နောက် player ဆီ
+          //သွားမှာမဟုတ်ဘူး။ တစ်နည်းအားဖြင့် လက်ရှိ player ကိုပဲ နှစ်ခါလုပ်ခိုင်းမှာဖြစ်တယ်။
+        }
+      }
+      if (checkWin()) {
         return;
       }
     }
-     else if (nextStep > 52){//step စုစုပေါင်းက 52 ပဲရှိတယ်။ ကျော်သွားရင် step အစကနေပြန်သွားရမယ်။ ပုံနဲ့ကြည့်ရင် ပြောတာပိုနားလည်လိမ့်မယ်။
-      nextStep = nextStep - 52;
-      document.getElementById("step" + nextStep).appendChild(clickedToken);
-      if (checkForOpponentTokens()){//ရွှေ့လိုက်တဲ့ နေရာမှာ opponent's token ရှိလားကြည့်မယ်။ 
-        addEventListenersToDice();
-        return;//အောက်ဆုံးမှာမှ transitionToNextPlayer ကိုထည့်ထားတာဖြစ်တဲ့အတွက် return ကို run ရင် function ရပ်သွားပြီး နောက် player ဆီ
-        //သွားမှာမဟုတ်ဘူး။ တစ်နည်းအားဖြင့် လက်ရှိ player ကိုပဲ နှစ်ခါလုပ်ခိုင်းမှာဖြစ်တယ်။
-      }
-    } else {
-      document.getElementById("step" + nextStep).appendChild(clickedToken);
-      if (checkForOpponentTokens()){
-        addEventListenersToDice();
-        return;//အောက်ဆုံးမှာမှ transitionToNextPlayer ကိုထည့်ထားတာဖြစ်တဲ့အတွက် return ကို run ရင် function ရပ်သွားပြီး နောက် player ဆီ
-        //သွားမှာမဟုတ်ဘူး။ တစ်နည်းအားဖြင့် လက်ရှိ player ကိုပဲ နှစ်ခါလုပ်ခိုင်းမှာဖြစ်တယ်။
-      }
+    if (result == 6) {//ခြောက်ကျရင် နောက်တစ်ခါ ထပ် roll ခိုင်းတာ။
+      addEventListenersToDice(); //dice ကိုနောက်တစ်ခေါက် ထပ်နှိပ်လို့ရအောင်လုပ်တာ။
+      removeEventListenersFromCurrentTokens();
+      return;//အောက်ဆုံးမှာမှ transitionToNextPlayer ကိုထည့်ထားတာဖြစ်တဲ့အတွက် return ကို run ရင် function ရပ်သွားပြီး နောက် player ဆီ
+      //သွားမှာမဟုတ်ဘူး။ တစ်နည်းအားဖြင့် လက်ရှိ player ကိုပဲ နှစ်ခါလုပ်ခိုင်းမှာဖြစ်တယ်။
     }
-    if (checkWin()){
-      return;
-    }
-  }
-  if ( result == 6){//ခြောက်ကျရင် နောက်တစ်ခါ ထပ် roll ခိုင်းတာ။
-    addEventListenersToDice(); //dice ကိုနောက်တစ်ခေါက် ထပ်နှိပ်လို့ရအောင်လုပ်တာ။
-    removeEventListenersFromCurrentTokens();
-    return;//အောက်ဆုံးမှာမှ transitionToNextPlayer ကိုထည့်ထားတာဖြစ်တဲ့အတွက် return ကို run ရင် function ရပ်သွားပြီး နောက် player ဆီ
-    //သွားမှာမဟုတ်ဘူး။ တစ်နည်းအားဖြင့် လက်ရှိ player ကိုပဲ နှစ်ခါလုပ်ခိုင်းမှာဖြစ်တယ်။
-  }
-  transitionToNextPlayer();
-  removeEventListenersFromPreviousTokens();
+    transitionToNextPlayer();
+    removeEventListenersFromPreviousTokens();
+  }, 500);
 
-  
-  function shouldChangeDirection(){ 
-    if (turn == "red" && redMovedSteps[clickedToken.id] > 50){
-        redMovedSteps[clickedToken.id] -= 50;
-        return true; 
-    } else if (turn == "green" && greenMovedSteps[clickedToken.id] > 50){
-        greenMovedSteps[clickedToken.id] -= 50;
-        return true;
-    } else if (turn == "yellow" && yellowMovedSteps[clickedToken.id] > 50){
-        yellowMovedSteps[clickedToken.id] -= 50;
-        return true
-    }else if (turn == "blue" && blueMovedSteps[clickedToken.id] > 50){
-        blueMovedSteps[clickedToken.id] -= 50;
-        return true;
+  function shouldChangeDirection() {
+    if (turn == "red" && redMovedSteps[clickedToken.id] > 50) {
+      redMovedSteps[clickedToken.id] -= 50;
+      return true;
+    } else if (turn == "green" && greenMovedSteps[clickedToken.id] > 50) {
+      greenMovedSteps[clickedToken.id] -= 50;
+      return true;
+    } else if (turn == "yellow" && yellowMovedSteps[clickedToken.id] > 50) {
+      yellowMovedSteps[clickedToken.id] -= 50;
+      return true
+    } else if (turn == "blue" && blueMovedSteps[clickedToken.id] > 50) {
+      blueMovedSteps[clickedToken.id] -= 50;
+      return true;
     }
   }
-  function moveToFinishLine(){
-    if (turn == "red"){
-      if (redMovedSteps[clickedToken.id] > 5){
+  function moveToFinishLine() {
+    if (turn == "red") {
+      if (redMovedSteps[clickedToken.id] > 5) {
         clickedToken.remove();
       } else {
         document.getElementById(`${turn}Step${redMovedSteps[clickedToken.id]}`).appendChild(clickedToken)
       }
-    } else if (turn == "green"){
-       if (greenMovedSteps[clickedToken.id] > 5){
+    } else if (turn == "green") {
+      if (greenMovedSteps[clickedToken.id] > 5) {
         clickedToken.remove();
-       } else {
+      } else {
         document.getElementById(`${turn}Step${greenMovedSteps[clickedToken.id]}`).appendChild(clickedToken)
-       }
-    } else if (turn == "yellow"){
-      if (yellowMovedSteps[clickedToken.id] > 5){
+      }
+    } else if (turn == "yellow") {
+      if (yellowMovedSteps[clickedToken.id] > 5) {
         clickedToken.remove();
       } else {
         document.getElementById(`${turn}Step${yellowMovedSteps[clickedToken.id]}`).appendChild(clickedToken)
       }
-    } else if (turn == "blue"){
-      if (blueMovedSteps[clickedToken.id] > 5){
+    } else if (turn == "blue") {
+      if (blueMovedSteps[clickedToken.id] > 5) {
         clickedToken.remove();
       } else {
         document.getElementById(`${turn}Step${blueMovedSteps[clickedToken.id]}`).appendChild(clickedToken)
       }
     }
   }
-  function moveInFinishLine(){
-    if (turn == "red"){
-      if (redMovedSteps[clickedToken.id] > 6){//finish line မှာခြောက်ကွက်ပဲရှိတယ်။ သူထက်ပိုရင် token ကိုရွှေ့လို့မရဘူး။
+  function moveInFinishLine() {
+    if (turn == "red") {
+      if (redMovedSteps[clickedToken.id] > 6) {//finish line မှာခြောက်ကွက်ပဲရှိတယ်။ သူထက်ပိုရင် token ကိုရွှေ့လို့မရဘူး။
         redMovedSteps[clickedToken.id] -= result;
         document.getElementById(`${turn}Step${redMovedSteps[clickedToken.id]}`).appendChild(clickedToken);
-      } else if (redMovedSteps[clickedToken.id] < 6){
+      } else if (redMovedSteps[clickedToken.id] < 6) {
         document.getElementById(`${turn}Step${redMovedSteps[clickedToken.id]}`).appendChild(clickedToken);
-      } else if (redMovedSteps[clickedToken.id] == 6){
+      } else if (redMovedSteps[clickedToken.id] == 6) {
         clickedToken.remove();
         console.log("Finished!!");
         return true;
       }
-    } else if (turn == "green"){
-      if (greenMovedSteps[clickedToken.id] > 6){
+    } else if (turn == "green") {
+      if (greenMovedSteps[clickedToken.id] > 6) {
         greenMovedSteps[clickedToken.id] -= result;
         document.getElementById(`${turn}Step${greenMovedSteps[clickedToken.id]}`).appendChild(clickedToken);
-      } else if (greenMovedSteps[clickedToken.id] < 6){
+      } else if (greenMovedSteps[clickedToken.id] < 6) {
         document.getElementById(`${turn}Step${greenMovedSteps[clickedToken.id]}`).appendChild(clickedToken);
-      } else if (greenMovedSteps[clickedToken.id] == 6){
+      } else if (greenMovedSteps[clickedToken.id] == 6) {
         clickedToken.remove();
         console.log("Finished!!");
         return true;
       }
-    } else if (turn == "yellow"){
-      if (yellowMovedSteps[clickedToken.id] > 6){
+    } else if (turn == "yellow") {
+      if (yellowMovedSteps[clickedToken.id] > 6) {
         yellowMovedSteps[clickedToken.id] -= result;
         document.getElementById(`${turn}Step${yellowMovedSteps[clickedToken.id]}`).appendChild(clickedToken);
-      } else if (yellowMovedSteps[clickedToken.id] < 6){
+      } else if (yellowMovedSteps[clickedToken.id] < 6) {
         document.getElementById(`${turn}Step${yellowMovedSteps[clickedToken.id]}`).appendChild(clickedToken);
-      } else if (yellowMovedSteps[clickedToken.id] == 6){
+      } else if (yellowMovedSteps[clickedToken.id] == 6) {
         clickedToken.remove();
         console.log("Finished!!");
         return true;
       }
-    } else if (turn == "blue"){
-      if (blueMovedSteps[clickedToken.id] > 6){
+    } else if (turn == "blue") {
+      if (blueMovedSteps[clickedToken.id] > 6) {
         blueMovedSteps[clickedToken.id] -= result;
         document.getElementById(`${turn}Step${blueMovedSteps[clickedToken.id]}`).appendChild(clickedToken);
-      } else if (blueMovedSteps[clickedToken.id] < 6){
+      } else if (blueMovedSteps[clickedToken.id] < 6) {
         document.getElementById(`${turn}Step${blueMovedSteps[clickedToken.id]}`).appendChild(clickedToken);
-      } else if (blueMovedSteps[clickedToken.id] == 6){
+      } else if (blueMovedSteps[clickedToken.id] == 6) {
         clickedToken.remove();
         console.log("Finished!!");
         return true;
       }
     }
   }
-  function updateMovedSteps(){//အလှည့်တိုင်း ဘယ်နှစ်ကွက်ရွှေ့ပြီးပြီလဲဆိုတာကို update တင်တာ။
-    if (turn == "red"){
+  function updateMovedSteps() {//အလှည့်တိုင်း ဘယ်နှစ်ကွက်ရွှေ့ပြီးပြီလဲဆိုတာကို update တင်တာ။
+    if (turn == "red") {
       redMovedSteps[clickedToken.id] += result;
-    } else if (turn == "green"){
+    } else if (turn == "green") {
       greenMovedSteps[clickedToken.id] += result;
-    } else if (turn == "yellow"){
+    } else if (turn == "yellow") {
       yellowMovedSteps[clickedToken.id] += result;
-    } else if (turn == "blue"){
+    } else if (turn == "blue") {
       blueMovedSteps[clickedToken.id] += result;
     }
+    clickedToken.classList.add('token-animation');
+    clickedToken.style.transform = "translateX(-60px)";
+    
+
   }
-  function checkForOpponentTokens(){
+  function checkForOpponentTokens() {
     let tokens = document.getElementById("step" + nextStep).children;
-    if (tokens.length == 1){//ရွှေ့လိုက်တဲ့အကွက်ထဲမှာ ကိုယ်တစ်ယောက်ပဲရှိမယ်ဆိုရင်
-       return false;
-    }else if (isSafeSpot()){//ရွှေ့လိုက်တဲ့အကွက်က ကြယ်လိုမျိုး အစကတည်းက default သတ်မှတ်ထားတဲ့နေရာမျိုးဖြစ်နေရင်
+    if (tokens.length == 1) {//ရွှေ့လိုက်တဲ့အကွက်ထဲမှာ ကိုယ်တစ်ယောက်ပဲရှိမယ်ဆိုရင်
+      return false;
+    } else if (isSafeSpot()) {//ရွှေ့လိုက်တဲ့အကွက်က ကြယ်လိုမျိုး အစကတည်းက default သတ်မှတ်ထားတဲ့နေရာမျိုးဖြစ်နေရင်
       return false;
     } else {//အပေါ်ကနှစ်ခုစလုံးမဟုတ်ရင်
       let tokenColors = [];//ရွှေ့ရမယ့်အကွက်ထဲက tokens တွေရဲ့ color ကိုကြည့်တယ်။
       for (let index = 0; index < tokens.length; index++) {
-        tokenColors[index] = tokens[index].id.slice(0,-6)
+        tokenColors[index] = tokens[index].id.slice(0, -6)
       }
-      if(hasDuplicates(tokenColors)){//အရောင်တူတာနှစ်ခုရှိမယ်ဆိုရင် safe spot ဖြစ်တယ်။ စားလို့မရဘူး။
+      if (hasDuplicates(tokenColors)) {//အရောင်တူတာနှစ်ခုရှိမယ်ဆိုရင် safe spot ဖြစ်တယ်။ စားလို့မရဘူး။
         return false;
       } else {//မဟုတ်ရင် opponent's token ကိုစားလို့ရတယ်။ 
-        let tokenColor = tokens[0].id.slice(0,-6);
+        let tokenColor = tokens[0].id.slice(0, -6);
         let tokenNum = tokens[0].id.slice(-1);
         let token = document.getElementById(`${tokenColor}Token${tokenNum}`)
         tokens[0].remove();//အစားခံရတဲ့ token ကို remove လုပ်တယ်။
         document.getElementById(`${tokenColor}Token${tokenNum}Home`).appendChild(token);//home မှာပြန်ထားတယ်။
-        reduceSteps(tokenColor,tokenNum);
+        reduceSteps(tokenColor, tokenNum);
         return true;
       }
     }
-    function reduceSteps(color,num){
-      if (color == "red"){
+    function reduceSteps(color, num) {
+      if (color == "red") {
         redMovedSteps[`redToken${num}`] = 0;;
-      } else if (color == "green"){
+      } else if (color == "green") {
         greenMovedSteps[`greenToken${num}`] = 0;
-      } else if (color == "yellow"){
+      } else if (color == "yellow") {
         yellowMovedSteps[`yellowToken${num}`] = 0;
-      } else if (color == "blue"){
+      } else if (color == "blue") {
         blueMovedSteps[`blueToken${num}`] = 0;
       }
     }
-    function isSafeSpot(){
-          let spot = document.getElementById("step" + nextStep).id.slice(4)
-          if ( spot == 1 || spot == 14 || spot == 27 || spot == 40 ||
-               spot == 9 || spot == 22 || spot == 35 || spot == 48){
-            return true;
-          }
+    function isSafeSpot() {
+      let spot = document.getElementById("step" + nextStep).id.slice(4)
+      if (spot == 1 || spot == 14 || spot == 27 || spot == 40 ||
+        spot == 9 || spot == 22 || spot == 35 || spot == 48) {
+        return true;
+      }
     }
   }
-  
+
 }
+
+
 function checkWin () {
   if (turn == "red" && document.querySelectorAll(".tokenRed").length == 0){
     checkRank();
@@ -642,3 +532,5 @@ function isInFinishLine(container){
     return false
   }
 }
+
+

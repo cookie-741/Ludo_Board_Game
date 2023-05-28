@@ -6,15 +6,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../dist/output.css">
+  <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="input.css">
   <title>Choose Menu</title>
 </head>
 
-<body class="w-full h-screen overflow-hidden">
-  <nav class="m-3 container">
+<body class="w-full h-screen overflow-hidden ">
+  <nav class=" container">
     <div class="grid grid-cols-1 md:grid-cols-2 items-center">
       <div class="flex justify-center md:justify-start">
-        <img src="../img/logo.png" class="md:w-40 sm:w-20 m-3 odd:drop-shadow-lg" id="logo" alt="Logo" />
+        <img src="../img/logo.png" class="md:w-32 w-20 m-3 odd:drop-shadow-lg" id="logo" alt="Logo" />
       </div>
       <div class="flex justify-center md:justify-end space-x-5">
         <div class="relative w-40">
@@ -34,37 +35,49 @@
     </div>
   </nav>
   <!--Hero Section-->
-  <div class="flex justify-center m-5">
-    <div class="border border-solid bg-black w-4/5 md:h-64 h-40 rounded-t-lg flex justify-between">
+  <div class="flex justify-center m-2">
+    <div class="border border-solid bg-black w-4/5 md:h-64 h-40 rounded-t-3xl flex justify-between">
       <div class="md:w-2/4 w-1/2 md:p-5 p-4 m-5">
         <p class="text-white md:text-8xl text-5xl font-Font1 md:translate-x-56 translate-x-10">Let's</p>
         <p class="text-white md:text-8xl text-5xl font-Font1 md:translate-x-96 translate-x-20">play</p>
       </div>
       <div class="w2/4">
-        <img src="../img/img2.png" class="w-72">
+        <img src="../img/img2.png" class="md:w-72 w-60">
       </div>
     </div>
   </div>
   <!--Card Menu-->
   <div class="flex space-x-10 justify-center m-5">
-    <div class="border border-boxColor1 bg-boxColor1 md:w-72 w-56 md:h-48 rounded-t-lg relative">
+    <div class="border border-boxColor1 bg-boxColor1 md:w-72 w-56 md:h-48 rounded-t-3xl relative">
       <img src="../img/image3.png" class="w-64 absolute bottom-4 left-3">
-     <a href="../ludo project/Local.html">
-      <div
-      class="border border-btnColor bg-btnColor w-28 h-8 rounded-b-2xl text-white text-center text-xl font-Font1 absolute md:top-44 top-36 md:right-24 right-8 font-semibold">
-      Local</div>
-     </a>
+      <button id="localbtn"><div
+      class="border border-btnColor bg-btnColor w-28 h-8 rounded-b-2xl text-white text-center text-xl font-Font1 absolute md:top-44 top-36 md:right-24 right-12 font-semibold">
+      Local</div></button>
     </div>
-    <div class="border border-boxColor1 bg-boxColor1 md:w-72 w-56 md:h-48 rounded-t-lg relative">
+    <div class="border border-boxColor1 bg-boxColor1 md:w-72 w-56 md:h-48 rounded-t-3xl relative">
       <img src="../img/robot-removebg-preview.png" class="w-64 rounded-t-lg">
       <a href="../ludo project/Bot.html">
         <div
-        class="border border-btnColor bg-btnColor w-28 h-8 rounded-b-2xl text-white text-center text-xl font-Font1 font-semibold absolute md:top-44 top-36 md:right-24 right-8">
-        Robot</div>
+        class="border border-btnColor bg-btnColor w-28 h-8 rounded-b-2xl text-white text-center text-xl font-Font1 font-semibold absolute md:top-44 top-36 md:right-24 right-12">
+        Bot</div>
       </a>
     </div>
     </div>
   </div>
+  <div class="border border-solid md:w-80 w-52 md:h-64 h-52 mx-auto mt-10 rounded-lg bg-background flex items-center absolute md:top-20 top-40 bottom-0 md:left-0 left-56 right-0" id="boxCover">
+      <div class="border-background border-solid md:w-36 md:h-28 md:m-5 m-2 rounded-lg box1 p-2">
+        <a href="">
+          <p class="font-bold md:text-5xl text-2xl text-center text-white">2</p>
+          <p class="font-bold md:text-3xl text-lg text-center text-white">Players</p>
+        </a>
+      </div>
+      <div class="border-background border-solid md:w-36 md:h-28 m-5 rounded-lg p-2 box1">
+        <a href="">
+          <p class="font-bold md:text-5xl text-2xl text-center">4</p>
+          <p class="font-bold md:text-3xl text-lg text-center">Players</p>
+        </a>
+      </div>
+     </div>
 </body>
-
+<script src="script.js"></script>
 </html>
